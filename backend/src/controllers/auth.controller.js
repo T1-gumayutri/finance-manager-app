@@ -2,14 +2,14 @@ const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-// Hàm tiện ích: Tạo JWT Token sống trong 30 ngày
+
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: '30d',
   });
 };
 
-// [POST] /api/auth/register - Đăng ký tài khoản
+
 const register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -45,15 +45,15 @@ const register = async (req, res) => {
   }
 };
 
-// [POST] /api/auth/login - Đăng nhập
+
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // 1. Tìm user theo email
+    
     const user = await User.findOne({ email });
 
-    // 2. So sánh mật khẩu nhập vào với mật khẩu đã băm trong DB
+    
     if (user && (await bcrypt.compare(password, user.password))) {
       res.json({
         _id: user._id,

@@ -26,7 +26,7 @@ const Insights = () => {
   if (error) return <div className="mt-20 text-center text-red-500">{error}</div>;
   if (!insights) return null;
 
-  // Xác định màu sắc cho Điểm Sức Khỏe (Health Score)
+  
   let scoreColor = 'text-green-600';
   let scoreBg = 'bg-green-100';
   if (insights.health.score < 50) {
@@ -46,7 +46,7 @@ const Insights = () => {
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         
-        {/* 1️⃣ Điểm Sức Khỏe Tài Chính (Nổi bật nhất) */}
+        
         <div className="flex flex-col items-center justify-center p-6 bg-white border border-gray-100 shadow-sm rounded-2xl lg:col-span-1">
           <h3 className="text-lg font-bold text-gray-700">Điểm Sức Khỏe Tài Chính</h3>
           <div className={`mt-6 flex items-center justify-center w-40 h-40 rounded-full ${scoreBg} border-8 border-white shadow-inner`}>
@@ -57,7 +57,7 @@ const Insights = () => {
           <p className="mt-4 text-sm font-medium text-gray-500">Thang điểm 100</p>
         </div>
 
-        {/* Chi tiết trừ/cộng điểm */}
+        
         <div className="p-6 bg-white border border-gray-100 shadow-sm rounded-2xl lg:col-span-2">
           <h3 className="mb-4 text-lg font-bold text-gray-700">Phân tích điểm số:</h3>
           <ul className="space-y-3">
@@ -74,7 +74,7 @@ const Insights = () => {
       </div>
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-        {/* 2️⃣ Xu hướng chi tiêu */}
+        
         <div className="p-6 bg-white border border-gray-100 shadow-sm rounded-2xl">
           <h3 className="flex items-center text-lg font-bold text-gray-700">
             📈 Xu hướng chi tiêu
@@ -92,7 +92,7 @@ const Insights = () => {
           </div>
         </div>
 
-        {/* 3️⃣ Dự đoán chi tiêu */}
+        
         <div className="p-6 bg-white border border-gray-100 shadow-sm rounded-2xl">
           <h3 className="flex items-center text-lg font-bold text-gray-700">
             🔮 Dự đoán cuối tháng
@@ -108,7 +108,7 @@ const Insights = () => {
           </div>
         </div>
 
-        {/* 4️⃣ Gợi ý tiết kiệm */}
+        
         <div className="p-6 bg-white border border-gray-100 shadow-sm rounded-2xl">
           <h3 className="flex items-center text-lg font-bold text-gray-700">
             💡 Gợi ý tối ưu

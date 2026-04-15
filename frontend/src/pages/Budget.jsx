@@ -7,13 +7,13 @@ const Budget = () => {
   const [inputAmount, setInputAmount] = useState('');
   const [loading, setLoading] = useState(true);
 
-  // Lấy dữ liệu ngày hiện tại
+  
   const currentMonth = new Date().getMonth() + 1;
   const currentYear = new Date().getFullYear();
 
   const fetchData = async () => {
     try {
-      // Chạy song song 2 API để tối ưu tốc độ tải
+      
       const [budgetRes, dashboardRes] = await Promise.all([
         api.get('/budgets'),
         api.get('/dashboard')
@@ -51,11 +51,11 @@ const Budget = () => {
 
   if (loading) return <div className="mt-10 text-center text-gray-500">Đang tải dữ liệu...</div>;
 
-  // Tính toán phần trăm chi tiêu để vẽ Progress Bar
+  
   const percent = budgetAmount > 0 ? Math.min((currentExpense / budgetAmount) * 100, 100) : 0;
   const isOverBudget = currentExpense > budgetAmount && budgetAmount > 0;
 
-  // Đổi màu thanh tiến trình dựa trên mức độ chi tiêu
+  
   let progressBarColor = 'bg-green-500';
   if (percent > 80) progressBarColor = 'bg-red-500';
   else if (percent > 50) progressBarColor = 'bg-yellow-500';
@@ -67,7 +67,7 @@ const Budget = () => {
       </h2>
 
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-        {/* Cột trái: Form thiết lập ngân sách */}
+        
         <div className="p-6 bg-white shadow-sm rounded-xl h-fit">
           <h3 className="mb-4 text-xl font-bold text-gray-700">Thiết lập giới hạn chi tiêu</h3>
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -89,7 +89,7 @@ const Budget = () => {
           </form>
         </div>
 
-        {/* Cột phải: Thống kê trạng thái ngân sách */}
+        
         <div className="p-6 bg-white shadow-sm rounded-xl">
           <h3 className="mb-4 text-xl font-bold text-gray-700">Tình trạng hiện tại</h3>
           
@@ -102,7 +102,7 @@ const Budget = () => {
                 <span>/ {budgetAmount.toLocaleString('vi-VN')} đ</span>
               </div>
 
-              {/* Progress Bar (Thanh tiến trình) */}
+              
               <div className="w-full h-4 bg-gray-200 rounded-full">
                 <div 
                   className={`h-4 rounded-full transition-all duration-500 ${progressBarColor}`}
@@ -110,7 +110,7 @@ const Budget = () => {
                 ></div>
               </div>
 
-              {/* Thông báo cảnh báo */}
+             
               {isOverBudget ? (
                 <div className="p-3 font-semibold text-red-700 bg-red-100 border-l-4 border-red-500 rounded">
                   ⚠️ Cảnh báo: Bạn đã chi tiêu vượt mức ngân sách!

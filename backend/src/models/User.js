@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema(
     email: { 
       type: String, 
       required: [true, 'Vui lòng nhập email'], 
-      unique: true, // Không cho phép trùng email
+      unique: true, 
       lowercase: true
     },
     password: { 
@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema(
       default: 'user' 
     },
   },
-  { timestamps: true } // Tự động thêm createdAt và updatedAt
+  { timestamps: true } 
 );
 
 module.exports = mongoose.model('User', userSchema);

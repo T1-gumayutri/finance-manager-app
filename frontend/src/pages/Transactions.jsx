@@ -5,7 +5,7 @@ const Transactions = () => {
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
   
-  // Thêm state để theo dõi xem đang Sửa giao dịch nào (Nếu null nghĩa là đang Thêm mới)
+  
   const [editingId, setEditingId] = useState(null);
 
   const [formData, setFormData] = useState({
@@ -45,7 +45,7 @@ const Transactions = () => {
     });
   };
 
-  // Hàm xử lý khi bấm nút "Sửa" ở bảng
+  
   const handleEditClick = (transaction) => {
     setEditingId(transaction._id);
     setFormData({
@@ -55,11 +55,11 @@ const Transactions = () => {
       note: transaction.note || '',
       date: new Date(transaction.date).toISOString().split('T')[0] // Format chuẩn để hiện lên input date
     });
-    // Cuộn trang lên đầu để thấy form (nếu bảng quá dài)
+    
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // Hàm Hủy sửa, đưa form về trạng thái Thêm mới
+  
   const handleCancelEdit = () => {
     setEditingId(null);
     setFormData({
@@ -71,22 +71,22 @@ const Transactions = () => {
     });
   };
 
-  // Xử lý Thêm hoặc Cập nhật
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       if (editingId) {
-        // GỌI API SỬA (PUT)
+       
         await api.put(`/transactions/${editingId}`, formData);
         alert('Cập nhật giao dịch thành công!');
-        setEditingId(null); // Reset trạng thái sửa
+        setEditingId(null); 
       } else {
-        // GỌI API THÊM MỚI (POST)
+        
         await api.post('/transactions', formData);
         alert('Thêm giao dịch thành công!');
       }
       
-      // Reset form sau khi thành công
+      
       setFormData(prev => ({ ...prev, amount: '', note: '' }));
       fetchTransactions();
     } catch (error) {
@@ -110,7 +110,7 @@ const Transactions = () => {
 
   return (
     <div className="grid grid-cols-1 gap-8 md:grid-cols-3 animate-fade-in">
-      {/* Cột trái: Form */}
+     
       <div className={`p-6 bg-white shadow-sm md:col-span-1 rounded-xl h-fit border-t-4 ${editingId ? 'border-yellow-400' : 'border-blue-500'}`}>
         <h3 className="mb-4 text-xl font-bold text-gray-800">
           {editingId ? '✏️ Cập nhật Giao Dịch' : '➕ Thêm Giao Dịch'}
@@ -157,7 +157,7 @@ const Transactions = () => {
             <button type="submit" className={`flex-1 py-2 font-bold text-white rounded-lg ${editingId ? 'bg-yellow-500 hover:bg-yellow-600' : 'bg-blue-600 hover:bg-blue-700'}`}>
               {editingId ? 'Lưu Thay Đổi' : 'Lưu Giao Dịch'}
             </button>
-            {/* Hiển thị nút Hủy nếu đang ở chế độ sửa */}
+            
             {editingId && (
               <button type="button" onClick={handleCancelEdit} className="flex-1 py-2 font-bold text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300">
                 Hủy
@@ -167,7 +167,7 @@ const Transactions = () => {
         </form>
       </div>
 
-      {/* Cột phải: Danh sách */}
+      
       <div className="p-6 bg-white shadow-sm md:col-span-2 rounded-xl">
         <h3 className="mb-4 text-xl font-bold text-gray-800">Lịch sử giao dịch</h3>
         {transactions.length === 0 ? (

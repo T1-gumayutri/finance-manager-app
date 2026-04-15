@@ -1,4 +1,4 @@
-# Sử dụng image Node.js bản 22
+
 FROM node:22-alpine
 
 WORKDIR /app

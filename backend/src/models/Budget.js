@@ -26,7 +26,7 @@ const budgetSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// Ràng buộc: Mỗi user chỉ có 1 bản ghi budget cho 1 tháng/năm
+
 budgetSchema.index({ userId: 1, month: 1, year: 1 }, { unique: true });
 
 module.exports = mongoose.model('Budget', budgetSchema);

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import api from '../services/api';
 import { 
   PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer,
-  BarChart, Bar, XAxis, YAxis, CartesianGrid // Thêm các component cho biểu đồ cột
+  BarChart, Bar, XAxis, YAxis, CartesianGrid 
 } from 'recharts';
 
 const COLORS = ['#ef4444', '#3b82f6', '#f59e0b', '#10b981', '#8b5cf6', '#ec4899'];
@@ -18,7 +18,7 @@ const Dashboard = () => {
   const fetchDashboardData = async () => {
     setLoading(true);
     try {
-      // Truyền tham số bộ lọc xuống backend
+      
       const res = await api.get(`/dashboard?month=${filterMonth}&year=${filterYear}`);
       setStats(res.data);
     } catch (error) {
@@ -28,7 +28,7 @@ const Dashboard = () => {
     }
   };
 
-  // Gọi lại API mỗi khi filterMonth hoặc filterYear thay đổi
+  
   useEffect(() => {
     fetchDashboardData();
   }, [filterMonth, filterYear]);
@@ -36,21 +36,21 @@ const Dashboard = () => {
   if (loading && !stats) return <div className="mt-20 text-xl font-semibold text-center text-gray-500">Đang tải dữ liệu...</div>;
   if (!stats) return <div className="mt-20 text-center text-red-500">Không thể tải dữ liệu</div>;
 
-  // Dữ liệu cho biểu đồ cột (So sánh Tổng Thu vs Tổng Chi)
+  
   const barChartData = [
-    { name: 'Thu nhập', amount: stats.totalIncome, fill: '#10b981' }, // Màu xanh lá
-    { name: 'Chi tiêu', amount: stats.totalExpense, fill: '#ef4444' }  // Màu đỏ
+    { name: 'Thu nhập', amount: stats.totalIncome, fill: '#10b981' }, 
+    { name: 'Chi tiêu', amount: stats.totalExpense, fill: '#ef4444' }  
   ];
 
   return (
     <div className="space-y-6 animate-fade-in">
-      {/* Header và Bộ lọc */}
+      
       <div className="flex flex-col items-center justify-between md:flex-row">
         <h2 className="text-3xl font-bold text-gray-800">
           Thống kê giao dịch
         </h2>
         
-        {/* Bộ lọc Tháng / Năm */}
+        
         <div className="flex mt-4 space-x-4 md:mt-0">
           <select 
             value={filterMonth} 
@@ -66,7 +66,7 @@ const Dashboard = () => {
             onChange={(e) => setFilterYear(e.target.value)}
             className="px-4 py-2 bg-white border rounded-lg shadow-sm focus:ring-blue-500"
           >
-            {[2024, 2025, 2026].map(y => ( // Có thể linh hoạt tạo mảng năm
+            {[2024, 2025, 2026].map(y => ( 
               <option key={y} value={y}>Năm {y}</option>
             ))}
           </select>
@@ -89,10 +89,10 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Khu vực Biểu đồ */}
+      
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         
-        {/* Biểu đồ Cột (Thêm mới theo yêu cầu) */}
+        
         <div className="p-6 bg-white rounded-xl shadow-sm">
           <h3 className="mb-4 text-xl font-bold text-gray-700 text-center">So sánh Thu - Chi</h3>
           <div className="h-80">
@@ -108,7 +108,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Biểu đồ Tròn */}
+        
         <div className="p-6 bg-white rounded-xl shadow-sm">
           <h3 className="mb-4 text-xl font-bold text-gray-700 text-center">Danh mục chi tiêu</h3>
           {stats.categoryStats && stats.categoryStats.length > 0 ? (

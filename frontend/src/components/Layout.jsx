@@ -13,7 +13,7 @@ const Layout = () => {
 
   return (
     <div className="flex h-screen bg-gray-50">
-      {/* Sidebar (Menu bên trái) */}
+      
       <aside className="w-64 bg-white border-r shadow-sm flex flex-col">
         <div className="p-6 border-b">
           <h1 className="text-2xl font-bold text-blue-600">FinanceApp</h1>
@@ -27,8 +27,7 @@ const Layout = () => {
           <Link to="/transactions" className="block px-4 py-3 text-gray-700 transition rounded-lg hover:bg-blue-50 hover:text-blue-600">
             💰 Giao dịch
           </Link>
-          {/* Nơi đây sau này có thể thêm menu Ngân sách */}
-          {/* THÊM DÒNG NÀY VÀO */}
+          
           <Link to="/budget" className="block px-4 py-3 text-gray-700 transition rounded-lg hover:bg-blue-50 hover:text-blue-600">
             🎯 Ngân sách
           </Link>
@@ -47,9 +46,9 @@ const Layout = () => {
         </div>
       </aside>
 
-      {/* Main Content (Khu vực hiển thị nội dung chính bên phải) */}
+      
       <main className="flex-1 p-8 overflow-y-auto">
-        <Outlet /> {/* Các trang Dashboard, Transactions sẽ được render tại đây */}
+        <Outlet /> 
       </main>
     </div>
   );

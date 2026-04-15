@@ -4,7 +4,7 @@ const transactionSchema = new mongoose.Schema(
   {
     userId: { 
       type: mongoose.Schema.Types.ObjectId, 
-      ref: 'User', // Liên kết khóa ngoại tới bảng User
+      ref: 'User', 
       required: true 
     },
     type: { 
@@ -34,7 +34,7 @@ const transactionSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// Đánh index để tối ưu hiệu suất tìm kiếm theo user và thời gian
+
 transactionSchema.index({ userId: 1, date: -1 });
 
 module.exports = mongoose.model('Transaction', transactionSchema);

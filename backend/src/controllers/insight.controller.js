@@ -9,10 +9,10 @@ const getSmartInsights = async (req, res) => {
     const currentMonth = today.getMonth() + 1;
     const currentYear = today.getFullYear();
 
-    // Tìm ngày đầu tiên của 3 tháng trước
+    
     const threeMonthsAgoDate = new Date(currentYear, currentMonth - 4, 1);
 
-    // BƯỚC 1: LẤY DATA BẰNG MONGODB AGGREGATION $FACET
+    
     const aggregationResult = await Transaction.aggregate([
       { $match: { userId: userId, type: 'expense', date: { $gte: threeMonthsAgoDate } } },
       {
@@ -34,7 +34,7 @@ const getSmartInsights = async (req, res) => {
     const pastMonthsTotal = aggregationResult[0].pastMonthsTotal;
     const currentMonthTotalExpense = currentMonthCategories.reduce((sum, cat) => sum + cat.total, 0);
 
-    // Lấy Ngân sách và Tổng thu tháng này
+    
     const [budgetDoc, incomeTotalResult] = await Promise.all([
       Budget.findOne({ userId, month: currentMonth, year: currentYear }),
       Transaction.aggregate([
@@ -46,12 +46,7 @@ const getSmartInsights = async (req, res) => {
     const budgetAmount = budgetDoc ? budgetDoc.amount : 0;
     const totalIncome = incomeTotalResult.length > 0 ? incomeTotalResult[0].total : 0;
 
-    // =========================================================
-    // BƯỚC 2: CÁC THUẬT TOÁN THÔNG MINH (SMART ALGORITHMS)
-    // =========================================================
-
-    // 1️⃣ Spending Trend Analysis (Phân tích xu hướng)
-    // Tính trung bình cộng chi tiêu của các tháng trước
+    
     const pastTotal = pastMonthsTotal.reduce((sum, m) => sum + m.total, 0);
     const pastAvg = pastMonthsTotal.length > 0 ? pastTotal / pastMonthsTotal.length : 0;
     
@@ -62,8 +57,7 @@ const getSmartInsights = async (req, res) => {
       if (trendPercentage > 20) trendWarning = true;
     }
 
-    // 2️⃣ Smart Saving Suggestion (Gợi ý tiết kiệm)
-    // Category chiếm nhiều nhất chính là phần tử đầu tiên trong mảng (do đã sort -1 ở $facet)
+    
     let savingSuggestion = null;
     if (currentMonthCategories.length > 0) {
       const topCategory = currentMonthCategories[0];
@@ -74,18 +68,18 @@ const getSmartInsights = async (req, res) => {
       }
     }
 
-    // 3️⃣ Expense Prediction (Dự đoán chi tiêu cuối tháng)
-    const daysPassed = today.getDate(); // Số ngày đã qua của tháng
-    const totalDaysInMonth = new Date(currentYear, currentMonth, 0).getDate(); // Tổng số ngày trong tháng
+    
+    const daysPassed = today.getDate(); 
+    const totalDaysInMonth = new Date(currentYear, currentMonth, 0).getDate(); 
     
     const predictedExpense = daysPassed > 0 ? (currentMonthTotalExpense / daysPassed) * totalDaysInMonth : 0;
     const isPredictedOverBudget = budgetAmount > 0 && predictedExpense > budgetAmount;
 
-    // 4️⃣ Financial Health Score (Điểm sức khỏe tài chính 0 - 100)
+    
     let healthScore = 100;
     const scoreExplanations = [];
 
-    // Tiêu chí A: Tỷ lệ tiết kiệm (Thu - Chi)
+    
     const savingsRate = totalIncome > 0 ? ((totalIncome - currentMonthTotalExpense) / totalIncome) * 100 : 0;
     if (savingsRate < 0) {
       healthScore -= 30;
@@ -97,19 +91,19 @@ const getSmartInsights = async (req, res) => {
       scoreExplanations.push("+ Tỷ lệ tiết kiệm tốt (>= 20%).");
     }
 
-    // Tiêu chí B: Xu hướng chi tiêu
+    
     if (trendWarning) {
       healthScore -= 15;
       scoreExplanations.push(`-15 điểm: Chi tiêu tháng này tăng đột biến ${trendPercentage.toFixed(1)}% so với trung bình các tháng trước.`);
     }
 
-    // Tiêu chí C: Tuân thủ Ngân sách
+    
     if (budgetAmount > 0) {
       if (currentMonthTotalExpense > budgetAmount) {
         healthScore -= 20;
         scoreExplanations.push("-20 điểm: Bạn đã phá vỡ ngân sách đặt ra cho tháng này.");
       } else if (currentMonthTotalExpense <= budgetAmount * 0.8) {
-        // Thưởng điểm nếu xài dưới 80% ngân sách (tối đa 100 điểm)
+        
         healthScore = Math.min(100, healthScore + 5); 
         scoreExplanations.push("+5 điểm thưởng: Quản lý ngân sách xuất sắc (chi tiêu dưới 80% hạn mức).");
       }
@@ -118,7 +112,7 @@ const getSmartInsights = async (req, res) => {
       scoreExplanations.push("-5 điểm: Chưa thiết lập mục tiêu ngân sách (Budget) cho tháng này.");
     }
 
-    // Trả về JSON hoàn chỉnh cho Frontend
+    
     res.json({
       trend: {
         pastAverage: Math.round(pastAvg),
@@ -137,7 +131,7 @@ const getSmartInsights = async (req, res) => {
           : "Tốc độ chi tiêu an toàn."
       },
       health: {
-        score: Math.max(0, healthScore), // Không cho điểm rớt xuống âm
+        score: Math.max(0, healthScore), 
         explanations: scoreExplanations
       }
     });

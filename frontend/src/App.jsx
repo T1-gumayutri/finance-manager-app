@@ -23,21 +23,21 @@ function App() {
     <AuthProvider>
       <Router>
         <Routes>
-          {/* Public Routes */}
+          
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
 
-          {/* Private Routes được bọc bởi Layout */}
+          
           <Route path="/" element={
             <ProtectedRoute>
               <Layout />
             </ProtectedRoute>
           }>
-            {/* Các trang con sẽ được render vào vị trí <Outlet /> trong Layout */}
+            
             <Route index element={<Dashboard />} />
             <Route path="transactions" element={<Transactions />} />
-            <Route path="budget" element={<Budget />} /> {/* <--- THÊM DÒNG NÀY */}
-            <Route path="insights" element={<Insights />} /> {/* <--- THÊM DÒNG NÀY */}
+            <Route path="budget" element={<Budget />} /> 
+            <Route path="insights" element={<Insights />} /> 
           </Route>
         </Routes>
       </Router>

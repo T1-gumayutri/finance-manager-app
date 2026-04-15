@@ -1,16 +1,16 @@
 version: '3.8'
 
 services:
-  # 1. Container Database (MongoDB)
+  
   mongodb:
     image: mongo:latest
     container_name: finance_mongo
     ports:
       - "27017:27017"
     volumes:
-      - mongo_data:/data/db # Lưu trữ data xuống ổ cứng thật để không bị mất khi tắt Docker
+      - mongo_data:/data/db 
 
-  # 2. Container Backend
+  
   backend:
     build: ./backend
     container_name: finance_backend
@@ -18,21 +18,21 @@ services:
       - "5000:5000"
     environment:
       - PORT=5000
-      # Đổi 'localhost' thành 'mongodb' (tên service) để backend trong Docker gọi được DB
+      
       - MONGO_URI=mongodb://mongodb:27017/finance_manager
       - JWT_SECRET=finance_manager_secret_key_2026_!@#
     depends_on:
-      - mongodb # Đợi DB chạy xong thì Backend mới chạy
+      - mongodb 
 
-  # 3. Container Frontend
+  
   frontend:
     build: ./frontend
     container_name: finance_frontend
     ports:
-      - "80:80" # Map cổng 80 của container ra cổng 80 của máy thật
+      - "80:80" 
     depends_on:
       - backend
 
-# Khai báo volume để lưu dữ liệu DB
+
 volumes:
   mongo_data:

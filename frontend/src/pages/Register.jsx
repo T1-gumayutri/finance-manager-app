@@ -21,11 +21,11 @@ const Register = () => {
     setLoading(true);
     
     try {
-      // Gọi API đăng ký
+      
       const res = await api.post('/auth/register', formData);
-      // Gọi hàm login từ Context để lưu token và data
+      
       login(res.data, res.data.token);
-      // Chuyển hướng vào trang chủ
+      
       navigate('/');
     } catch (err) {
       setError(err.response?.data?.message || 'Có lỗi xảy ra khi đăng ký!');
