@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+/* Vẫn giữ lại base style mượt mà của chúng ta */
+body {
+  background-color: #f3f4f6;
+  color: #1f2937;
+}
